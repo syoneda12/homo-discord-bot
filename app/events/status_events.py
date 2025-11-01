@@ -1,8 +1,9 @@
 
 from datetime import datetime, timedelta
 
-# presence更新時に呼ばれる（online/idle/dnd/offline等の変更）
+# ステータス変更通知は挫折したけど一応残しとく
 def register_status_events(client, config, logger):
+    # presence更新時に呼ばれる（online/idle/dnd/offline等の変更）
     @client.event
     async def on_presence_update(before, after):
         try:

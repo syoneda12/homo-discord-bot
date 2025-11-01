@@ -9,6 +9,7 @@ def register_voice_events(client, config, logger):
                 return
 
             now = datetime.utcnow() + timedelta(hours=9)
+            # 通知メッセージを書き込むテキストチャンネル（チャンネルIDを指定）
             bot_room = client.get_channel(config["VOICE_NOTIFICATION_CHANNEL"])
             if bot_room is None:
                 try:
