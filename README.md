@@ -25,5 +25,5 @@ docker compose up -d --build
 ```
 
 ## 技術メモ
-- 起動時に `guild.chunk()` してメンバーキャッシュを温め、presenceイベントの取りこぼしを低減。
+- 起動時に `guild.chunk()` してpresenceイベントの取りこぼしを低減。
 - 監視チャンネルは `fetch_channel` フォールバックで未キャッシュ対策。
