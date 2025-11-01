@@ -1,2 +1,2 @@
-# docker-genshin-notifier
-原神の通知系
+# homo-discord-bot
+Discord色々
