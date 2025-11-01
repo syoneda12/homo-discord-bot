@@ -26,7 +26,7 @@ CHANNEL_IDS_TO_PREFETCH = list(set([
 
 @client.event
 async def on_ready():
-    logger.info(f"✅ Logged in as {client.user} (ID: {client.user.id})")
+    logger.info(f"Logged in as {client.user} (ID: {client.user.id})")
     # Guildのメンバーキャッシュを温める（presence変更イベントのため）
     for guild in client.guilds:
         try:

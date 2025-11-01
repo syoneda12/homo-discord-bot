@@ -27,7 +27,6 @@ def register_status_events(client, config, logger):
                 bot_room = await resolve_channel(config["TEXT_CHANNEL_ID_OSSAN_STATUS_CHANGE_NOTIFICATION"])
                 if bot_room:
                     await bot_room.send(f"{after.status.name} `({now:%m/%d %H:%M:%S})`")
-
             elif after.id == config["TWINBIRD_ID"]:
                 bot_room = await resolve_channel(config["TEXT_CHANNEL_ID_TWINBIRD_STATUS_CHANGE_NOTIFICATION"])
                 if bot_room:
