@@ -1,16 +1,10 @@
-version: '3.9'
-services:
-  homo-notifier:
-    build: .
-    env_file: .env
-    volumes:
-      - ./log/homo:/app/log
-    restart: always
 
-  genshin-notifier:
+version: "3.9"
+services:
+  homo-discord-bot:
     build: .
-    command: ["sh", "-c", "echo '0 18 * * * python /app/genshin-notifier/main.py >> /app/log/genshin_cron.log 2>&1' > /etc/cron.d/genshin_cron && crontab /etc/cron.d/genshin_cron && cron -f"]
+    container_name: homo-discord-bot
     env_file: .env
     volumes:
-      - ./log/genshin:/app/log
+      - ./app/logs:/app/logs
     restart: always
