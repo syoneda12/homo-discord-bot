@@ -1,29 +1,40 @@
 # homo-discord-bot
 
 ## 概要
-身内で利用しているDiscord サーバーの入退室・ステータス変更を監視して通知するボット。  
-Dockerコンテナで常駐稼働する。
+Discord サーバーの **ボイスチャンネル入退室** と **ユーザーステータス（オンライン／退席／オフラインなど）** を監視し、
+指定したテキストチャンネルに自動通知するボットです。
+Docker コンテナで常駐稼働できます。
 
-## 構成
-- `app/main.py` : Botエントリーポイント
-- `app/events/voice_events.py` : 入退室検知
-- `app/events/status_events.py` : ステータス変化検知
-- `app/config.py` : 環境変数設定
-- `app/logger.py` : ログ設定
-- `docker-compose.yml` : デプロイ構成
-
-## 重要設定（必須）
-1. Discord Developer Portal で以下の **Privileged Gateway Intents** を有効化：
-   - SERVER MEMBERS INTENT
-   - PRESENCE INTENT
-2. `.env` を設定（IDはすべて整数）。
-3. 再起動：`docker compose up -d --build`
+## 主な特徴
+- 複数ボイスチャンネルを可変で監視可能
+- ユーザーごとに異なる通知チャンネルを設定可能
+- ステータス変更を精密に検知（online / idle / dnd / offline）
+- 短時間の重複通知を自動抑止（デバウンス機能）
+- ログを Docker 標準出力とファイルの両方に出力
 
 ## 実行方法
 ```bash
+cp .env.template .env.development
 docker compose up -d --build
+docker logs -f homo-discord-bot
 ```
 
-## 技術メモ
-- 起動時に `guild.chunk()` してpresenceイベントの取りこぼしを低減。
-- 監視チャンネルは `fetch_channel` フォールバックで未キャッシュ対策。
+## .env 設定例
+```env
+DISCORD_BOT_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+HOMOSERVER_TEXTC_VOICE_CHANNEL_NOTIFICATION=111111111111111111
+HOMOSERVER_VOICEC_IDS=222222222222222222,333333333333333333
+USER_STATUS_MAP=444444444444444444:555555555555555555,666666666666666666:777777777777777777
+TEXT_CHANNEL_ID_DEFAULT_STATUS_CHANGE_NOTIFICATION=888888888888888888
+LOG_LEVEL=DEBUG
+```
+
+## ファイル構成
+- app/config.py : 設定ロード
+- app/logger.py : ログ設定（ファイル＋Docker出力）
+- app/main.py : エントリーポイント（チャンク安定化付き）
+- app/events/status_events.py : ステータス監視
+- app/events/voice_events.py : ボイス監視
+
+## ライセンス
+MIT License
